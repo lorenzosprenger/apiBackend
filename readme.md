@@ -11,7 +11,6 @@
 * Clicar no botão verde '<> Code'
 * Clicar no ícone para copiar a URL, conforme a imagem
 
-<img src="../assets/clone_repo.png">
 
 #### Clonar o repositório na sua máquina
 
@@ -22,16 +21,12 @@
 git clone URL_REPOSITORIO
 ```
 
-<img src="../assets/git_clone.png">
-
 #### Acessar pasta
 * Digitar o comando 'cd' e o nome do seu repositório
 * cd (change directory): acessar outra pasta
 ```
 cd NOME_REPOSITORIO
 ```
-
-<img src="../assets/cd_projeto.png">
 
 #### Reinstalar os pacotes da aplicação
 ```
