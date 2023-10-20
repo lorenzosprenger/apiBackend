@@ -117,3 +117,5 @@ rm -rf projetoBackend
 * -r (recursive): apaga pastas e subpastas de forma recursiva
 * -f (force): não pergunta confirmações
 * projetoBackend: nome da pasta que contem os arquivos da aplicação
+
+tetses
