@@ -1,4 +1,4 @@
-# 5º Passo: Criar controllers para gerenciar as requisições das rotas
+# 6º Passo: Criar configuração com banco de dados
 
 * Copiar url do repositório no gitHub
 * Clonar repositório no computador com o gitBash
@@ -22,7 +22,6 @@ git clone URL_REPOSITORIO
 cd NOME_REPOSITORIO
 ```
 
-
 #### Reinstalar os pacotes da aplicação
 ```
 npm i
@@ -32,94 +31,65 @@ npm i
 #### Recriar arquivo .env
 * Definir as variáveis no arquivo .env a partir das chaves definidas no arquivo .env.example
 
-#### Criar pasta 'controllers' dentro da pasta 'src'
-```
-mkdir src/controllers
-```
-#### Criar arquivo 'crudController.js' na pasta 'controllers'
-```
-touch src/controllers/crudController.js
-```
-#### Colar os códigos no arquivo crudController.js
-```
-function listarDados(request, response) {
-    response.send('Retorno de lista de informação do Banco de dados');
-}
+### Criar a configuração com o banco de dados
 
-function gravarDados(request, response) {
-    response.send('Método utilizado para salvar informações!');
-}
+#### Instalar o pacote mysql2
 
-function atualizarDados(request, response) {
-    response.send('Método utilizado para editar informações!');
-}
-
-function deletarDados(request, response) {
-    response.send('Método utilizado para deletar informações!');
-}
-
-module.exports = {
-    listarDados,
-    gravarDados, 
-    atualizarDados, 
-    deletarDados
-}
+```
+npm i mysql2
 ```
 
-#### Alterar o arquivo 'rotas.js'
+#### Dentro da pasta 'src', vamos criar uma pasta de nome 'config'. Dentro desta pasta vamos criar um arquivo com nome 'db.js' e colar o código:
+
 ```
-// Importar pacote do express
-const { Router } = require('express');
-// Instanciar o Router na variavel router
-const router = Router();
-// Importar funções do controller para a rota acessar as funções
-const { 
-    listarDados,
-    gravarDados,
-    atualizarDados,
-    deletarDados
- } = require('../controllers/crudController');
+// Arquivo responsável pela configuração e conexão com o banco de dados
+ 
+// Importar o pacote do mysql
+const mysql = require('mysql2');
 
-router.get('/listar', listarDados);
+// Importar o pacote de acesso aos de variáveis de ambiente
+require('dotenv').config();
 
-router.post('/gravar', gravarDados);
+// Estabelece a criação da conexão com banco 
+const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+    port: process.env.DB_PORT
+});
 
-router.put('/atualizar/:id', atualizarDados);
+// Testa se o banco esta conectado
+connection.connect((err) => {
+  if (err) {
+    console.log(`Erro na conexão com banco: ${err}`);
+  } else {
+    console.log("Mysql Connected!");
+  }
+});
 
-router.delete('/deletar/:id', deletarDados);
-
-module.exports = router;
+module.exports = connection;
 ```
 
-## TAREFA
+#### Abrir o arquivo .env e digitar o conteúdo abaixo, conforme os comentários
 
-#### Criar as outras 4 requisições para os métodos GET, POST, PUT e DELETE para exibir os conteúdos de cada rota retornados pelas funções do 'crudController'
+```
+# Definir a porta do servidor. Ex: 3000
+PORT = 
 
-## Conclusão do Passo 5
-#### URL do repositório com:
- * Estrutura do projeto 
- * Arquivo readme de documentação dos passos realizados
- * Configuração 
- * Retorno de teste da API
- * Arquivo de rotas com os métodos [GET, POST, PUT, DELETE]
- * Arquivo com as funções de controller
- * Imagem de cada método testado no Insomnia dentro do arquivo readme, conforme exibido na conclusão do passo 4
+# DB_HOST: Domínio do servidor. Ex: 'localhost'
+# DB_USER: Usuário do banco de banco de dados. Ex: 'root'
+# DB_PASSWORD: Senha do banco de banco de dados. Ex: 'root'
+# DB_DATABASE: Nome da base de dados criada. Ex: 'projeto_final'
+# DB_PORT: Porta que MySql está instalado. Ex: '3306' ou '3308'
 
-#### Enviar a URL na tarefa do teams
- * Tarefa 5 - Criando controllers da API
+DB_HOST = 
+DB_USER = 
+DB_PASSWORD =
+DB_DATABASE =
+DB_PORT =
+```
 
+## Conclusão do Passo 6
 
-
-<hr>
-
-## Tela do método DELETE
-<img src="imgs/delete.png">
-
-## Tela do método PUT
-<img src="imgs/put.png">
-
-## Tela do método GET
-<img src="imgs/get.png">
-
-## Tela do método POST
-<img src="imgs/post.png">
+* Atualizar repositório no gitHub
